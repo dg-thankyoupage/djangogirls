@@ -1,0 +1,58 @@
+{% extends 'global/base.html' %}
+{% load staticfiles %}
+
+{% block extra_stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/thank_you_sponsors.css' %}" />
+{% endblock extra_stylesheets %}
+
+{% block content %}
+    <div class="container">
+        <div class="page-header">
+            <h4>To: Sponsors, organizers, volunteers, community</h4>
+            <h4>Subject: <strong>Big thanks to all of our sponsors!</strong></h4>
+        </div> <!--div .page-header-->
+        <div class="row">
+            <div class="col-md-12">
+                <p>Dear all,</p>
+                <p>
+                    We wouldn't be able to do so much over a year without financial help.
+                </p>
+                <p>
+                    Thanks to our sponsors we have organized <strong>48 workshops
+                    (since July 2014)</strong> with 22 upcoming and even more to come.
+                </p>
+                <p>
+                    The list underneath doesn't include where and when companies and foundations made their contributions,
+                    but do know that most of them are helping us out through much more than just one event.
+                </p>
+                <p>
+                    They made it possible to bring the idea of learning how to code to <strong>1646 participants</strong>
+                    from all over the world - this is something to be proud of.
+                </p>
+                <p>
+                    Big thanks to all of you! &#9829;
+                </p>
+            </div> <!--div .col-md-12-->
+        </div> <!--div .row-->
+        <div class="sponsor-logos">
+            <div class="row">
+                {% for sponsor in unique_sponsors %}
+                    <div class="col-md-3">
+                        <a href="{{ sponsor.url }}" target="_blank">
+                            {% if sponsor.logo %}
+                                <img src="{{ sponsor.logo.url }}" alt="{{ sponsor.name }}" />
+                            {% else %}
+                                <b>{{ sponsor.name }}</b>
+                            {% endif %}
+                        </a>
+                    </div> <!--div .col-md-3-->
+                    {% if forloop.counter|divisibleby:4 %}
+                        </div><div class="row">
+                    {% endif %}
+                    {% empty %}
+                        <p>No sponsors were added.</p>
+                {% endfor %}
+            </div> <!--div .row-->
+        </div>
+    </div>  <!--div .container-->
+{% endblock content %}

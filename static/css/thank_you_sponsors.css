@@ -1,0 +1,10 @@
+.sponsor-logos {
+  margin: 30px 0 0 0;
+}
+.sponsor-logos .col-md-3 {
+  text-align: center;
+}
+.sponsor-logos .col-md-3 img {
+  max-width: 80%;
+  height: auto;
+}

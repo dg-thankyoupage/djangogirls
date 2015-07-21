@@ -1,11 +1,14 @@
 import icalendar
 
+from django.db.models import Count
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
+from django.template.response import TemplateResponse
 from django.utils import timezone
 from django_date_extensions.fields import ApproximateDate
 
 from .models import Event, EventPage, EventPageMenu, EventPageContent, Story
+from .models import Sponsor
 from .utils import get_event_page
 
 
@@ -88,3 +91,23 @@ def events_ical(request):
 
     return HttpResponse(calendar.to_ical(),
                         content_type='text/calendar; charset=UTF-8')
+
+
+def thank_you_sponsors(request):
+    all_names = Sponsor.objects.values_list('name', flat=True)
+    unique_names = set()
+    unique_sponsors = set()
+    for name in all_names:
+        if name in unique_names:
+            continue
+        else:
+            unique_names.add(name)
+            sponsor = Sponsor.objects.filter(name=name)[0]
+            unique_sponsors.add(sponsor)
+    return TemplateResponse(
+        request,
+        'thank_you.html',
+        {
+            'unique_sponsors': unique_sponsors,
+        }
+    )
