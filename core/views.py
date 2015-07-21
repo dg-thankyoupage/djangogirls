@@ -92,6 +92,7 @@ def events_ical(request):
                         content_type='text/calendar; charset=UTF-8')
 
 
+
 def thank_you_sponsors(request):
     all_names = Sponsor.objects.values_list('name', flat=True)
     unique_names = set()
@@ -110,3 +111,7 @@ def thank_you_sponsors(request):
             'unique_sponsors': unique_sponsors,
         }
     )
+
+
+def newsletter(request):
+    return render(request, 'newsletter.html', {})
